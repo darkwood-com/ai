@@ -1,0 +1,17 @@
+{
+    "name": "darkwood/ai-examples",
+    "description": "Example scripts for Darkwood AI",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=8.2",
+        "darkwood/ai-jev-platform": "^0.1",
+        "symfony/dotenv": "^7.4|^8.0",
+        "symfony/http-client": "^7.3|^8.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}
