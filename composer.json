@@ -1,0 +1,32 @@
+{
+    "name": "darkwood/ai",
+    "description": "Complementary AI component ecosystem for Symfony AI",
+    "license": "MIT",
+    "keywords": [
+        "dev"
+    ],
+    "authors": [
+        {
+            "name": "Mathieu Ledru",
+            "email": "matyo91@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "php": ">=8.2",
+        "deptrac/deptrac": "^4.5",
+        "php-cs-fixer/shim": "^3.91.2",
+        "symfony/console": "^5.4|^6.4|^7.4|^8.0",
+        "symfony/filesystem": "^5.4|^6.4|^7.4|^8.0",
+        "symfony/finder": "^5.4|^6.4|^7.4|^8.0",
+        "symfony/process": "^5.4|^6.4|^7.4|^8.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "conflict": {
+        "phpstan/phpdoc-parser": "<2.0.0",
+        "phpstan/phpstan": "2.2.x-dev || 2.3.x-dev"
+    }
+}

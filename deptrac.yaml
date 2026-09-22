@@ -1,0 +1,8 @@
+deptrac:
+  paths:
+    - ./src
+  exclude_files:
+    - '#.*test.*#i'
+    - '#.*vendor.*#'
+  layers: []
+  ruleset: {}

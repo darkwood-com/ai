@@ -1,0 +1,20 @@
+parameters:
+    customRulesetUsed: true
+
+services:
+    -
+        class: PHPStan\Rules\DisallowedConstructs\DisallowedEmptyRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: Darkwood\AI\PHPStan\ForbidDeclareStrictTypesRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: Darkwood\AI\PHPStan\ForbidNativeExceptionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: Darkwood\AI\PHPStan\ForbidTestCoverageAttributesRule
+        tags:
+            - phpstan.rules.rule

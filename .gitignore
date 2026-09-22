@@ -1,0 +1,7 @@
+.deptrac.cache
+.doctor-rst.cache
+.php-cs-fixer.cache
+.phpunit.cache
+
+composer.lock
+vendor

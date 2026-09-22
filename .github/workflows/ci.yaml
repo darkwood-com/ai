@@ -1,0 +1,111 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+    cancel-in-progress: true
+
+jobs:
+    validate:
+        name: Validate
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v7
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.2'
+                    coverage: none
+                    tools: composer
+
+            -   name: Validate composer.json
+                run: composer validate --strict
+
+            -   name: Install root dependencies
+                uses: ramsey/composer-install@v4
+
+            -   name: PHP-CS-Fixer
+                run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+    tests:
+        name: Unit / PHP ${{ matrix.php-version }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version: ['8.2', '8.5']
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v7
+
+            -   name: Install workspace
+                uses: ./.github/actions/workspace
+                with:
+                    php-version: ${{ matrix.php-version }}
+
+            -   name: Run PHPUnit
+                run: |
+                    if [ ! -d src ]; then
+                        echo "No packages to test yet."
+                        exit 0
+                    fi
+                    configs=$(find src -name phpunit.xml.dist -not -path '*/vendor/*' | sort)
+                    if [ -z "$configs" ]; then
+                        echo "No packages to test yet."
+                        exit 0
+                    fi
+                    echo "$configs" | .github/run-in-packages.sh vendor/bin/phpunit -c '{}'
+
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v7
+
+            -   name: Install workspace
+                uses: ./.github/actions/workspace
+                with:
+                    php-version: '8.5'
+
+            -   name: Run PHPStan
+                run: |
+                    if [ ! -d src ]; then
+                        echo "No packages to analyse yet."
+                        exit 0
+                    fi
+                    configs=$(find src -name phpstan.dist.neon -not -path '*/vendor/*' | sort)
+                    if [ -z "$configs" ]; then
+                        echo "No packages to analyse yet."
+                        exit 0
+                    fi
+                    echo "$configs" | .github/run-in-packages.sh vendor/bin/phpstan analyse --no-progress --error-format=github -c '{}'
+
+    deptrac:
+        name: deptrac
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v7
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.5'
+
+            -   name: Install root dependencies
+                uses: ramsey/composer-install@v4
+
+            -   name: Run deptrac
+                run: |
+                    if [ ! -d src ]; then
+                        echo "No packages to analyse yet."
+                        exit 0
+                    fi
+                    vendor/bin/deptrac

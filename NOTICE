@@ -1,0 +1,10 @@
+Darkwood AI extends Symfony AI. It does not replace or fork that project.
+
+Monorepo tooling in this repository (Composer workspace scripts, PHPStan rules,
+PHP-CS-Fixer configuration, Deptrac layout and CI helpers) is adapted from
+https://github.com/symfony/ai.
+
+Symfony AI Platform remains an external Composer dependency
+(`symfony/ai-platform`). Darkwood AI does not ship a duplicate Platform package.
+
+Adapted Symfony files keep their original copyright notices.
