@@ -109,3 +109,23 @@ jobs:
                         exit 0
                     fi
                     vendor/bin/deptrac
+
+    example:
+        name: Example
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v7
+
+            -   name: Install workspace
+                uses: ./.github/actions/workspace
+                with:
+                    php-version: '8.5'
+
+            -   name: Install example dependencies
+                uses: ramsey/composer-install@v4
+                with:
+                    working-directory: examples
+
+            -   name: Run Jev example
+                run: php examples/jev/evaluate.php --mock

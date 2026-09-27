@@ -1,0 +1,9 @@
+This package adapts the TypeSafe Jev client originally written for Symfony AI.
+
+The HTTP request shape, decision types (`noul`, `choice`, `score`), result
+conversion, and tests come from that work. Adapted files keep their Symfony
+copyright headers.
+
+Darkwood AI does not reimplement Symfony AI Platform contracts. This package
+depends on `symfony/ai-platform` and lives under the
+`Darkwood\AI\Platform\Bridge\Jev` namespace.
